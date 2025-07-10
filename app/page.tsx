@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import FullpageScroll from "@/components/fullpage-scroll";
 import Navigation from "@/components/navigation";
 import Hero from "@/components/hero";
@@ -11,9 +11,15 @@ import Contact from "@/components/contact";
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
 
-  const goToSection = (index: number) => {
+  const handleSectionChange = useCallback((index: number) => {
     setCurrentSection(index);
-  };
+  }, []);
+
+  const goToSection = useCallback((index: number) => {
+    if ((window as any).goToSection) {
+      (window as any).goToSection(index);
+    }
+  }, []);
 
   const sections = [
     <Hero key="hero" goToSection={goToSection} />,
@@ -25,7 +31,9 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white">
       <Navigation currentSection={currentSection} goToSection={goToSection} />
-      <FullpageScroll>{sections}</FullpageScroll>
+      <FullpageScroll onSectionChange={handleSectionChange}>
+        {sections}
+      </FullpageScroll>
     </main>
   );
 }

@@ -3,7 +3,6 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
-import { ExternalLink } from "lucide-react";
 
 interface Project {
   id: number;
@@ -11,53 +10,43 @@ interface Project {
   category: string;
   image: string;
   description: string;
+  year?: string;
+  client?: string;
 }
 
 interface ProjectCardProps {
   project: Project;
+  isActive?: boolean;
+  onHover?: (isHovered: boolean) => void;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  isActive = false,
+  onHover,
+}: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const card = cardRef.current;
       const image = imageRef.current;
-      const overlay = overlayRef.current;
-      const content = contentRef.current;
+      const text = textRef.current;
 
-      if (!card || !image || !overlay || !content) return;
+      if (!card || !image || !text) return;
 
-      // Set initial states
-      gsap.set(overlay, { opacity: 0 });
-      gsap.set(content, { y: 20, opacity: 0 });
-
-      // Hover animations
       const handleMouseEnter = () => {
-        gsap.to(image, { scale: 1.1, duration: 0.6, ease: "power2.out" });
-        gsap.to(overlay, { opacity: 1, duration: 0.3, ease: "power2.out" });
-        gsap.to(content, {
-          y: 0,
-          opacity: 1,
-          duration: 0.4,
-          ease: "power2.out",
-          delay: 0.1,
-        });
+        onHover?.(true);
+        gsap.to(image, { scale: 1.05, duration: 0.6, ease: "power2.out" });
+        gsap.to(text, { y: -10, duration: 0.3, ease: "power2.out" });
       };
 
       const handleMouseLeave = () => {
+        onHover?.(false);
         gsap.to(image, { scale: 1, duration: 0.6, ease: "power2.out" });
-        gsap.to(overlay, { opacity: 0, duration: 0.3, ease: "power2.out" });
-        gsap.to(content, {
-          y: 20,
-          opacity: 0,
-          duration: 0.3,
-          ease: "power2.out",
-        });
+        gsap.to(text, { y: 0, duration: 0.3, ease: "power2.out" });
       };
 
       card.addEventListener("mouseenter", handleMouseEnter);
@@ -70,11 +59,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     }, cardRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [onHover]);
 
   return (
-    <div ref={cardRef} className="project-card group cursor-pointer">
-      <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[4/3]">
+    <div
+      ref={cardRef}
+      className={`relative cursor-pointer transition-all duration-500 ${
+        isActive ? "opacity-100" : "opacity-70"
+      }`}
+    >
+      <div className="aspect-[4/3] overflow-hidden bg-gray-100">
         <div ref={imageRef} className="w-full h-full">
           <Image
             src={project.image || "/placeholder.svg"}
@@ -84,23 +78,18 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
+      </div>
 
-        <div
-          ref={overlayRef}
-          className="absolute inset-0 bg-black/70 flex items-center justify-center"
-        >
-          <div ref={contentRef} className="text-center px-6">
-            <span className="text-sm text-purple-400 font-medium">
-              {project.category}
-            </span>
-            <h3 className="text-xl font-bold mt-2 mb-3">{project.title}</h3>
-            <p className="text-gray-300 text-sm mb-4">{project.description}</p>
-            <div className="flex items-center justify-center text-purple-400">
-              <span className="mr-2">View Project</span>
-              <ExternalLink size={16} />
-            </div>
+      <div ref={textRef} className="mt-4">
+        <div className="text-xs text-gray-500 mb-1">{project.category}</div>
+        <h3 className="text-lg font-bold mb-2">{project.title}</h3>
+        <p className="text-sm text-gray-600 mb-2">{project.description}</p>
+        {project.year && project.client && (
+          <div className="flex gap-4 text-xs text-gray-400">
+            <span>{project.year}</span>
+            <span>{project.client}</span>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -6,10 +6,15 @@ import type React from "react";
 
 interface FullpageScrollProps {
   children: React.ReactNode[];
+  onSectionChange: (index: number) => void;
 }
 
-export default function FullpageScroll({ children }: FullpageScrollProps) {
+export default function FullpageScroll({
+  children,
+  onSectionChange,
+}: FullpageScrollProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const sectionsRef = useRef<HTMLDivElement[]>([]);
   const [currentSection, setCurrentSection] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const touchStartY = useRef(0);
@@ -29,20 +34,62 @@ export default function FullpageScroll({ children }: FullpageScrollProps) {
 
       setIsAnimating(true);
       const container = containerRef.current;
-      if (!container) return;
+      const currentSectionEl = sectionsRef.current[currentSection];
+      const nextSectionEl = sectionsRef.current[index];
 
-      gsap.to(container, {
-        y: -index * window.innerHeight,
-        duration: 1,
-        ease: "power2.inOut",
+      if (!container || !currentSectionEl || !nextSectionEl) return;
+
+      // Create timeline for smooth transition with fade effects
+      const tl = gsap.timeline({
         onComplete: () => {
           setCurrentSection(index);
+          onSectionChange(index);
           setIsAnimating(false);
         },
       });
+
+      // Fade out current section
+      tl.to(currentSectionEl, {
+        opacity: 0.3,
+        duration: 0.4,
+        ease: "power2.out",
+      });
+
+      // Move container and fade in new section
+      tl.to(
+        container,
+        {
+          y: -index * window.innerHeight,
+          duration: 1,
+          ease: "power2.inOut",
+        },
+        "-=0.2"
+      ).to(
+        nextSectionEl,
+        {
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      );
+
+      // Fade back current section to full opacity if needed
+      tl.to(currentSectionEl, {
+        opacity: 1,
+        duration: 0.1,
+      });
     },
-    [currentSection, isAnimating, totalSections]
+    [currentSection, isAnimating, totalSections, onSectionChange]
   );
+
+  // Expose goToSection function to parent
+  useEffect(() => {
+    (window as any).goToSection = goToSection;
+    return () => {
+      delete (window as any).goToSection;
+    };
+  }, [goToSection]);
 
   const handleWheel = useCallback(
     (e: WheelEvent) => {
@@ -126,6 +173,9 @@ export default function FullpageScroll({ children }: FullpageScrollProps) {
     window.addEventListener("touchend", handleTouchEnd, { passive: true });
     window.addEventListener("keydown", handleKeyDown);
 
+    // Initialize first section
+    onSectionChange(0);
+
     return () => {
       document.body.style.overflow = "auto";
       window.removeEventListener("wheel", handleWheel);
@@ -133,7 +183,13 @@ export default function FullpageScroll({ children }: FullpageScrollProps) {
       window.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleWheel, handleTouchStart, handleTouchEnd, handleKeyDown]);
+  }, [
+    handleWheel,
+    handleTouchStart,
+    handleTouchEnd,
+    handleKeyDown,
+    onSectionChange,
+  ]);
 
   return (
     <div className="fixed inset-0 overflow-hidden">
@@ -141,7 +197,11 @@ export default function FullpageScroll({ children }: FullpageScrollProps) {
         {children.map((child, index) => (
           <div
             key={`section-${index}`}
+            ref={(el) => {
+              if (el) sectionsRef.current[index] = el;
+            }}
             className="w-full h-screen flex-shrink-0"
+            style={{ opacity: index === 0 ? 1 : 0.3 }}
           >
             {child}
           </div>

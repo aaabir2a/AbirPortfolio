@@ -9,10 +9,7 @@ interface NavigationProps {
   goToSection: (index: number) => void;
 }
 
-export default function Navigation({
-  currentSection,
-  goToSection,
-}: NavigationProps) {
+export default function Navigation({ currentSection }: NavigationProps) {
   const navRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,7 +53,10 @@ export default function Navigation({
   };
 
   const handleNavClick = (index: number) => {
-    goToSection(index);
+    // Use the global goToSection function
+    if ((window as any).goToSection) {
+      (window as any).goToSection(index);
+    }
     if (isMenuOpen) {
       toggleMenu();
     }
@@ -71,7 +71,7 @@ export default function Navigation({
         <div className="flex justify-between items-center max-w-7xl mx-auto">
           <div
             className="text-2xl font-bold cursor-pointer"
-            onClick={() => goToSection(0)}
+            onClick={() => handleNavClick(0)}
           >
             Portfolio
           </div>
@@ -82,10 +82,10 @@ export default function Navigation({
               <button
                 key={section.index}
                 onClick={() => handleNavClick(section.index)}
-                className={`transition-colors ${
+                className={`transition-colors duration-300 ${
                   currentSection === section.index
-                    ? "text-purple-400"
-                    : "text-white hover:text-gray-300"
+                    ? "text-purple-400 font-semibold"
+                    : "text-white hover:text-purple-300"
                 }`}
               >
                 {section.name}
@@ -114,10 +114,10 @@ export default function Navigation({
             <button
               key={section.index}
               onClick={() => handleNavClick(section.index)}
-              className={`text-xl text-left transition-colors ${
+              className={`text-xl text-left transition-colors duration-300 ${
                 currentSection === section.index
-                  ? "text-purple-400"
-                  : "text-white hover:text-gray-300"
+                  ? "text-purple-400 font-semibold"
+                  : "text-white hover:text-purple-300"
               }`}
             >
               {section.name}
