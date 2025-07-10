@@ -328,9 +328,9 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
         }}
       >
         {hoveredProject !== null && (
-          <div className="flex gap-5 bg-white/95 backdrop-blur-md shadow-2xl rounded-xl overflow-hidden border border-gray-200 w-[440px] max-w-[90vw] p-5">
-            {/* Enlarged image */}
-            <div className="relative w-[160px] h-[160px] flex-shrink-0 rounded-lg overflow-hidden">
+          <div className="flex gap-6 bg-white/95 backdrop-blur-lg shadow-2xl rounded-2xl overflow-hidden border border-gray-200 w-[600px] max-w-[95vw] p-6">
+            {/* Larger image section */}
+            <div className="relative w-[220px] h-[220px] flex-shrink-0 rounded-xl overflow-hidden">
               <Image
                 src={projects[hoveredProject].image}
                 alt={projects[hoveredProject].title}
@@ -339,18 +339,18 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
               />
             </div>
 
-            {/* Text Content */}
-            <div className="text-sm text-black space-y-1 max-w-[250px]">
-              <h4 className="text-lg font-bold leading-tight">
+            {/* Slightly narrower text content */}
+            <div className="text-[13px] text-black space-y-2 flex flex-col justify-center max-w-[320px]">
+              <h4 className="text-xl font-bold leading-tight">
                 {projects[hoveredProject].title}
               </h4>
               <p className="text-gray-600 font-medium">
                 {projects[hoveredProject].category}
               </p>
-              <p className="text-gray-500 text-sm leading-snug line-clamp-4">
+              <p className="text-gray-500 leading-snug line-clamp-4 text-sm">
                 {projects[hoveredProject].description}
               </p>
-              <div className="pt-2 text-[12px] text-gray-400 font-mono">
+              <div className="pt-2 text-xs text-gray-400 font-mono">
                 {projects[hoveredProject].year} &nbsp;·&nbsp;{" "}
                 {projects[hoveredProject].client}
               </div>
