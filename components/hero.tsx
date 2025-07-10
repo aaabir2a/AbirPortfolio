@@ -105,7 +105,7 @@ export default function Hero({ goToSection }: HeroProps) {
 
       // If we've scrolled enough, go to next section
       if (newProgress >= 100 && delta > 0) {
-        goToSection(1); // Remove timeout for immediate transition
+        setTimeout(() => goToSection(1), 500);
       }
     };
 
