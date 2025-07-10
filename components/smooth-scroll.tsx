@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,17 +16,16 @@ export default function SmoothScroll({
     // Refresh ScrollTrigger on mount
     ScrollTrigger.refresh();
 
-    // Smooth scroll for anchor links
+    // Smooth scroll for anchor links using native scrollIntoView
     const handleAnchorClick = (e: Event) => {
       const target = e.target as HTMLAnchorElement;
       if (target.hash) {
         e.preventDefault();
         const element = document.querySelector(target.hash);
         if (element) {
-          gsap.to(window, {
-            duration: 1,
-            scrollTo: { y: element, offsetY: 80 },
-            ease: "power2.inOut",
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
           });
         }
       }

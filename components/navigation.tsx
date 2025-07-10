@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Menu, X } from "lucide-react";
-import type { HTMLNavElement, HTMLDivElement } from "react";
+// No need to import HTMLNavElement or HTMLDivElement; use HTMLElement and HTMLDivElement directly.
 
 export default function Navigation() {
-  const navRef = useRef<HTMLNavElement>(null);
+  const navRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
