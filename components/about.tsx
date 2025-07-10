@@ -2,26 +2,22 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 
-gsap.registerPlugin(ScrollTrigger);
+interface AboutProps {
+  isActive: boolean;
+}
 
-export default function About() {
+export default function About({ isActive }: AboutProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!isActive) return;
+
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          end: "bottom 30%",
-          toggleActions: "play none none reverse",
-        },
-      });
+      const tl = gsap.timeline({ delay: 0.3 });
 
       tl.fromTo(
         imageRef.current,
@@ -36,14 +32,17 @@ export default function About() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isActive]);
 
   return (
-    <section ref={sectionRef} id="about" className="py-20 px-6 bg-gray-900/50">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section
+      ref={sectionRef}
+      className="h-screen py-20 px-6 bg-gradient-to-br from-gray-900 to-black"
+    >
+      <div className="max-w-7xl mx-auto h-full flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
           <div ref={imageRef} className="relative">
-            <div className="aspect-square rounded-2xl overflow-hidden">
+            <div className="aspect-square rounded-2xl overflow-hidden max-w-md mx-auto">
               <Image
                 src="/placeholder.svg?height=500&width=500"
                 alt="About me"

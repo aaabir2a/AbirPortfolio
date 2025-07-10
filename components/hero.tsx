@@ -4,7 +4,11 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ChevronDown } from "lucide-react";
 
-export default function Hero() {
+interface HeroProps {
+  goToSection: (index: number) => void;
+}
+
+export default function Hero({ goToSection }: HeroProps) {
   const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -48,8 +52,7 @@ export default function Hero() {
   return (
     <section
       ref={heroRef}
-      id="home"
-      className="min-h-screen flex flex-col justify-center items-center px-6 relative"
+      className="h-screen flex flex-col justify-center items-center px-6 relative bg-gradient-to-br from-black via-gray-900 to-black"
     >
       <div className="text-center max-w-4xl mx-auto">
         <h1
@@ -73,9 +76,10 @@ export default function Hero() {
 
       <div
         ref={scrollRef}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
+        onClick={() => goToSection(1)}
       >
-        <div className="flex flex-col items-center text-gray-400">
+        <div className="flex flex-col items-center text-gray-400 hover:text-white transition-colors">
           <span className="text-sm mb-2">Scroll to explore</span>
           <ChevronDown size={24} />
         </div>
