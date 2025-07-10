@@ -142,10 +142,24 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
     return positions[index] || positions[0];
   };
 
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const imagePreviewRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   return (
     <section className="h-screen relative bg-white text-black overflow-hidden">
       {/* Background Image */}
-      <div
+      {/* <div
         ref={imageRef}
         className="absolute inset-0 opacity-0 transition-opacity duration-700 ease-out"
         style={{
@@ -159,10 +173,34 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
           className="object-cover"
           sizes="100vw"
         />
-      </div>
+      </div> */}
 
       {/* Scattered Project Titles */}
       <div ref={containerRef} className="relative h-full w-full">
+        {hoveredProject !== null && (
+          <div
+            ref={imagePreviewRef}
+            className="pointer-events-none fixed z-50 transition-opacity duration-300 ease-out"
+            style={{
+              top: mousePos.y + 20,
+              left: mousePos.x + 20,
+              opacity: 1,
+              transform: "translate(-50%, -50%)",
+              width: "300px",
+              height: "200px",
+            }}
+          >
+            <Image
+              src={projects[hoveredProject].image}
+              alt={projects[hoveredProject].title}
+              fill
+              className="object-cover rounded-md shadow-lg"
+              sizes="300px"
+            />
+            <h1>Abir ahmed</h1>
+          </div>
+        )}
+
         {projects.map((project, index) => {
           const position = getTextPositions(index);
           const isActive = currentProject === index;

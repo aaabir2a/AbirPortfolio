@@ -55,20 +55,20 @@ export default function FullpageScroll({
       tl.to(currentSectionEl, {
         opacity: 0,
         scale: 0.95,
-        duration: 0.5,
+        duration: 0.1,
         ease: "power2.inOut",
       });
 
       tl.to(container, {
         y: -index * window.innerHeight,
-        duration: 1,
+        duration: 0.5,
         ease: "power2.inOut",
       });
 
       tl.to(nextSectionEl, {
         opacity: 1,
         scale: 1,
-        duration: 0.7,
+        duration: 0.4,
         ease: "power2.out",
       });
     },
