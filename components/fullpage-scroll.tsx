@@ -39,7 +39,11 @@ export default function FullpageScroll({
 
       if (!container || !currentSectionEl || !nextSectionEl) return;
 
-      // Create timeline for smooth transition with fade effects
+      gsap.set(nextSectionEl, {
+        opacity: 0,
+        scale: 0.95,
+      });
+
       const tl = gsap.timeline({
         onComplete: () => {
           setCurrentSection(index);
@@ -48,36 +52,24 @@ export default function FullpageScroll({
         },
       });
 
-      // Fade out current section
       tl.to(currentSectionEl, {
-        opacity: 0.3,
-        duration: 0.4,
-        ease: "power2.out",
+        opacity: 0,
+        scale: 0.95,
+        duration: 0.5,
+        ease: "power2.inOut",
       });
 
-      // Move container and fade in new section
-      tl.to(
-        container,
-        {
-          y: -index * window.innerHeight,
-          duration: 1,
-          ease: "power2.inOut",
-        },
-        "-=0.2"
-      ).to(
-        nextSectionEl,
-        {
-          opacity: 1,
-          duration: 0.6,
-          ease: "power2.out",
-        },
-        "-=0.4"
-      );
+      tl.to(container, {
+        y: -index * window.innerHeight,
+        duration: 1,
+        ease: "power2.inOut",
+      });
 
-      // Fade back current section to full opacity if needed
-      tl.to(currentSectionEl, {
+      tl.to(nextSectionEl, {
         opacity: 1,
-        duration: 0.1,
+        scale: 1,
+        duration: 0.7,
+        ease: "power2.out",
       });
     },
     [currentSection, isAnimating, totalSections, onSectionChange]

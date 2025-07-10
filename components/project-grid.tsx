@@ -9,7 +9,7 @@ const projects = [
     id: 1,
     title: "SHINSEUNGBACK KIMYONGHUN",
     category: "INTERACTIVE INSTALLATION",
-    image: "/images/project1.png",
+    image: "/project1.jpeg",
     description: "Contemporary art installation exploring digital identity",
     year: "2024",
     client: "GALLERY MODERN",
@@ -18,7 +18,7 @@ const projects = [
     id: 2,
     title: "YANG ZZVOL ANABAILAT",
     category: "DIGITAL BRANDING",
-    image: "/images/project2.png",
+    image: "/project2.jpeg",
     description: "Brand identity for emerging fashion collective",
     year: "2024",
     client: "FASHION HOUSE",
@@ -27,7 +27,7 @@ const projects = [
     id: 3,
     title: "INTERNOSCIA KOLGEN KUROKAWA",
     category: "WEB EXPERIENCE",
-    image: "/placeholder.svg?height=600&width=800",
+    image: "/project3.jpeg?height=600&width=800",
     description: "Immersive web experience for music collective",
     year: "2023",
     client: "MUSIC LABEL",
@@ -36,7 +36,7 @@ const projects = [
     id: 4,
     title: "PHILIPPE INTERNOS TESFALDET",
     category: "MOTION GRAPHICS",
-    image: "/placeholder.svg?height=600&width=800",
+    image: "/project4.jpeg?height=600&width=800",
     description: "Motion identity for documentary film",
     year: "2023",
     client: "FILM STUDIO",
@@ -45,7 +45,7 @@ const projects = [
     id: 5,
     title: "SNELGROVE LIMBU YANG",
     category: "EDITORIAL DESIGN",
-    image: "/placeholder.svg?height=600&width=800",
+    image: "/project2.jpeg?height=600&width=800",
     description: "Art book design for contemporary artists",
     year: "2024",
     client: "PUBLISHING",
@@ -54,7 +54,7 @@ const projects = [
     id: 6,
     title: "Abir Ahmed",
     category: "INTERACTIVE INSTALLATION",
-    image: "/images/project1.png",
+    image: "/project6.jpeg",
     description: "Contemporary art installation exploring digital identity",
     year: "2024",
     client: "GALLERY MODERN",
@@ -149,7 +149,7 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
         ref={imageRef}
         className="absolute inset-0 opacity-0 transition-opacity duration-700 ease-out"
         style={{
-          opacity: hoveredProject !== null ? 0.15 : 0,
+          opacity: hoveredProject !== null ? 0.5 : 0,
         }}
       >
         <Image
