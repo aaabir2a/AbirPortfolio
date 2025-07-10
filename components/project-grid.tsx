@@ -71,6 +71,47 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
   const [currentProject, setCurrentProject] = useState(0);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const scrollWrapperRef = useRef<HTMLDivElement>(null);
+  const floatingRef = useRef<HTMLDivElement>(null);
+  const scrollTween = useRef<gsap.core.Tween | null>(null);
+
+  // Auto-scroll GSAP loop
+  useEffect(() => {
+    if (!isActive || !scrollWrapperRef.current) return;
+
+    const wrapper = scrollWrapperRef.current;
+    const totalHeight = wrapper.scrollHeight / 2; // Only half because of duplicate
+
+    scrollTween.current = gsap.to(wrapper, {
+      y: `-=${totalHeight}`,
+      duration: 30,
+      ease: "none",
+      repeat: -1,
+    });
+
+    return () => {
+      if (scrollTween.current) {
+        scrollTween.current.kill();
+        scrollTween.current = null;
+      }
+    };
+  }, [isActive]);
+
+  // Mouse follower for floating preview
+  useEffect(() => {
+    const move = (e: MouseEvent) => {
+      if (!floatingRef.current) return;
+
+      gsap.to(floatingRef.current, {
+        x: e.clientX + 20,
+        y: e.clientY + 20,
+        duration: 0.3,
+        ease: "power3.out",
+      });
+    };
+    window.addEventListener("mousemove", move);
+    return () => window.removeEventListener("mousemove", move);
+  }, []);
 
   // Auto-slider functionality
   useEffect(() => {
@@ -111,23 +152,40 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
     return () => ctx.revert();
   }, [isActive]);
 
+  useEffect(() => {
+    const moveImage = (e: MouseEvent) => {
+      if (!imageRef.current) return;
+
+      gsap.to(imageRef.current, {
+        x: e.clientX + 20,
+        y: e.clientY + 20,
+        duration: 0.3,
+        ease: "power3.out",
+      });
+    };
+
+    window.addEventListener("mousemove", moveImage);
+    return () => window.removeEventListener("mousemove", moveImage);
+  }, []);
+
   // Handle project hover
   const handleProjectHover = (projectId: number | null) => {
     setHoveredProject(projectId);
 
-    if (projectId !== null) {
-      // Pause auto-slider on hover
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-      setCurrentProject(projectId);
-    } else {
-      // Resume auto-slider when not hovering
-      if (isActive) {
-        intervalRef.current = setInterval(() => {
-          setCurrentProject((prev) => (prev + 1) % projects.length);
-        }, 4000);
-      }
+    if (projectId !== null && imageRef.current) {
+      gsap.to(imageRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.4,
+        ease: "power3.out",
+      });
+    } else if (imageRef.current) {
+      gsap.to(imageRef.current, {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.3,
+        ease: "power3.inOut",
+      });
     }
   };
 
@@ -177,7 +235,7 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
 
       {/* Scattered Project Titles */}
       <div ref={containerRef} className="relative h-full w-full">
-        {hoveredProject !== null && (
+        {/* {hoveredProject !== null && (
           <div
             ref={imagePreviewRef}
             className="pointer-events-none fixed z-50 transition-opacity duration-300 ease-out"
@@ -199,7 +257,7 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
             />
             <h1>Abir ahmed</h1>
           </div>
-        )}
+        )} */}
 
         {projects.map((project, index) => {
           const position = getTextPositions(index);
@@ -212,7 +270,7 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
               className="project-text absolute cursor-pointer select-none"
               style={{
                 ...position,
-                transform: `rotate(${(Math.random() - 0.5) * 15}deg)`,
+                // transform: `rotate(${(Math.random() - 0.5) * 15}deg)`,
               }}
               onMouseEnter={() => handleProjectHover(index)}
               onMouseLeave={() => handleProjectHover(null)}
@@ -256,6 +314,49 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
             </div>
           );
         })}
+      </div>
+
+      <div
+        ref={imageRef}
+        className="fixed z-50 pointer-events-none"
+        style={{
+          top: 0,
+          left: 0,
+          transform: "translate(-50%, -50%)",
+          opacity: 0,
+          scale: 0.95,
+        }}
+      >
+        {hoveredProject !== null && (
+          <div className="flex gap-5 bg-white/95 backdrop-blur-md shadow-2xl rounded-xl overflow-hidden border border-gray-200 w-[440px] max-w-[90vw] p-5">
+            {/* Enlarged image */}
+            <div className="relative w-[160px] h-[160px] flex-shrink-0 rounded-lg overflow-hidden">
+              <Image
+                src={projects[hoveredProject].image}
+                alt={projects[hoveredProject].title}
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            {/* Text Content */}
+            <div className="text-sm text-black space-y-1 max-w-[250px]">
+              <h4 className="text-lg font-bold leading-tight">
+                {projects[hoveredProject].title}
+              </h4>
+              <p className="text-gray-600 font-medium">
+                {projects[hoveredProject].category}
+              </p>
+              <p className="text-gray-500 text-sm leading-snug line-clamp-4">
+                {projects[hoveredProject].description}
+              </p>
+              <div className="pt-2 text-[12px] text-gray-400 font-mono">
+                {projects[hoveredProject].year} &nbsp;·&nbsp;{" "}
+                {projects[hoveredProject].client}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Project Counter */}
