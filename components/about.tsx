@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 interface AboutProps {
   isActive: boolean;
@@ -12,6 +14,8 @@ export default function About({ isActive }: AboutProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const skillsRef = useRef<HTMLDivElement>(null);
+  const toolsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isActive) return;
@@ -33,6 +37,52 @@ export default function About({ isActive }: AboutProps) {
 
     return () => ctx.revert();
   }, [isActive]);
+  // Scroll-triggered animation (runs once when mounted)
+  useEffect(() => {
+    const skillsList = skillsRef.current?.querySelector("ul");
+    const toolsList = toolsRef.current?.querySelector("ul");
+
+    if (!skillsList || !toolsList) return;
+
+    // Get list height (half, because we duplicated items)
+    const skillsItemHeight = skillsList.scrollHeight / 2;
+    const toolsItemHeight = toolsList.scrollHeight / 2;
+
+    // Animate Skills: top to bottom
+    gsap.fromTo(
+      skillsList,
+      { y: 0 },
+      {
+        y: skillsItemHeight,
+        duration: 10,
+        ease: "none",
+        repeat: -1,
+        modifiers: {
+          y: (y) =>
+            `${(parseFloat(y) % skillsItemHeight) - skillsItemHeight}px`,
+        },
+      }
+    );
+
+    // Animate Tools: bottom to top
+    gsap.fromTo(
+      toolsList,
+      { y: 0 },
+      {
+        y: -toolsItemHeight,
+        duration: 10,
+        ease: "none",
+        repeat: -1,
+        modifiers: {
+          y: (y) => `${parseFloat(y) % -toolsItemHeight}px`,
+        },
+      }
+    );
+    skillsList.addEventListener("mouseenter", () =>
+      gsap.globalTimeline.pause()
+    );
+    skillsList.addEventListener("mouseleave", () => gsap.globalTimeline.play());
+  }, []);
 
   return (
     <section
@@ -69,23 +119,40 @@ export default function About({ isActive }: AboutProps) {
             </p>
 
             <div className="grid grid-cols-2 gap-6 pt-6">
-              <div>
+              {/* Skills */}
+              <div ref={skillsRef} className="overflow-hidden h-32 relative">
                 <h3 className="text-xl font-semibold mb-3">Skills</h3>
-                <ul className="space-y-2 text-gray-300">
-                  <li>UI/UX Design</li>
-                  <li>Web Development</li>
-                  <li>Brand Identity</li>
-                  <li>Mobile Design</li>
-                </ul>
+                <div className="relative">
+                  <ul className="space-y-2 text-gray-300 will-change-transform">
+                    <li>UI/UX Design</li>
+                    <li>Web Development</li>
+                    <li>Brand Identity</li>
+                    <li>Mobile Design</li>
+                    {/* DUPLICATE for loop */}
+                    <li>UI/UX Design</li>
+                    <li>Web Development</li>
+                    <li>Brand Identity</li>
+                    <li>Mobile Design</li>
+                  </ul>
+                </div>
               </div>
-              <div>
+
+              {/* Tools */}
+              <div ref={toolsRef} className="overflow-hidden h-32 relative">
                 <h3 className="text-xl font-semibold mb-3">Tools</h3>
-                <ul className="space-y-2 text-gray-300">
-                  <li>Figma</li>
-                  <li>Adobe Creative Suite</li>
-                  <li>React & Next.js</li>
-                  <li>GSAP</li>
-                </ul>
+                <div className="relative">
+                  <ul className="space-y-2 text-gray-300 will-change-transform">
+                    <li>Figma</li>
+                    <li>Adobe Creative Suite</li>
+                    <li>React & Next.js</li>
+                    <li>GSAP</li>
+                    {/* DUPLICATE for loop */}
+                    <li>Figma</li>
+                    <li>Adobe Creative Suite</li>
+                    <li>React & Next.js</li>
+                    <li>GSAP</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
