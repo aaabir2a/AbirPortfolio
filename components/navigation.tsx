@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { Menu, X } from "lucide-react";
+import { Download, Menu, X } from "lucide-react";
 
 interface NavigationProps {
   currentSection: number;
@@ -18,7 +18,8 @@ export default function Navigation({ currentSection }: NavigationProps) {
     { name: "Home", index: 0 },
     { name: "Projects", index: 1 },
     { name: "About", index: 2 },
-    { name: "Contact", index: 3 },
+    { name: "CV", index: 3 },
+    { name: "Contact", index: 4 },
   ];
 
   useEffect(() => {
@@ -62,6 +63,16 @@ export default function Navigation({ currentSection }: NavigationProps) {
     }
   };
 
+  const handleDownloadCV = () => {
+    // Create a temporary link to download CV
+    const link = document.createElement("a");
+    link.href = "/cv.pdf"; // You would place your actual CV PDF in the public folder
+    link.download = "AbirAhmed.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <nav
@@ -77,7 +88,7 @@ export default function Navigation({ currentSection }: NavigationProps) {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             {sections.map((section) => (
               <button
                 key={section.index}
@@ -91,6 +102,15 @@ export default function Navigation({ currentSection }: NavigationProps) {
                 {section.name}
               </button>
             ))}
+
+            {/* Download CV Button */}
+            <button
+              onClick={handleDownloadCV}
+              className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-full hover:bg-gray-200 transition-colors duration-300 font-medium"
+            >
+              <Download size={16} />
+              Download CV
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -123,6 +143,15 @@ export default function Navigation({ currentSection }: NavigationProps) {
               {section.name}
             </button>
           ))}
+
+          {/* Mobile Download CV Button */}
+          <button
+            onClick={handleDownloadCV}
+            className="flex items-center gap-2 px-4 py-3 bg-white text-black rounded-full hover:bg-gray-200 transition-colors duration-300 font-medium text-left"
+          >
+            <Download size={16} />
+            Download CV
+          </button>
         </div>
       </div>
     </>

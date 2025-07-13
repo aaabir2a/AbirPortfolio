@@ -7,6 +7,7 @@ import Hero from "@/components/hero";
 import ProjectGrid from "@/components/project-grid";
 import About from "@/components/about";
 import Contact from "@/components/contact";
+import CVPreview from "@/components/cv-preview";
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState(0);
@@ -25,7 +26,8 @@ export default function Home() {
     <Hero key="hero" goToSection={goToSection} />,
     <ProjectGrid key="project-grid" isActive={currentSection === 1} />,
     <About key="about" isActive={currentSection === 2} />,
-    <Contact key="contact" isActive={currentSection === 3} />,
+    <CVPreview key="cv-preview" isActive={currentSection === 3} />,
+    <Contact key="contact" isActive={currentSection === 4} />,
   ];
 
   return (
