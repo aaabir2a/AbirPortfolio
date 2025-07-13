@@ -146,12 +146,13 @@ export default function Hero({ goToSection }: HeroProps) {
                 ref={subtitleRef}
                 className="text-base md:text-lg leading-relaxed text-black font-light"
               >
-                We are active across the entire spectrum of creative design and
-                digital innovation, from concept to execution, with a focus on
-                user experience and visual storytelling. Each of our projects is
-                a manifestation of our ability to recognize opportunity and
-                unlock its potential with a dedicated approach and tailored
-                creative strategy.
+                Innovative Software Developer with 2 years of experience in
+                crafting scalable web solutions and enhancing user engagement.
+                Engineered a tourism platform that boosted site traffic and
+                integrated Stripe payments to streamline transactions using
+                secure APIs. Seeking a Web Developer role to drive cutting-edge
+                web application development through advanced state management,
+                caching strategies, and responsive design.
               </p>
             </div>
           </div>
@@ -171,31 +172,42 @@ export default function Hero({ goToSection }: HeroProps) {
           {/* Description Text - White text on black background */}
           <div className="flex-1 max-w-lg ml-8 md:ml-16">
             <p className="text-base md:text-lg leading-relaxed text-white font-light">
-              We are active across the entire spectrum of creative design and
-              digital innovation, from concept to execution, with a focus on
-              user experience and visual storytelling. Each of our projects is a
-              manifestation of our ability to recognize opportunity and unlock
-              its potential with a dedicated approach and tailored creative
-              strategy.
+              I specialize in building responsive, scalable, and user-friendly
+              web and mobile applications using modern technologies. With a
+              strong foundation in React.js and Next.js, I craft dynamic
+              frontends that are both fast and interactive. I enhance user
+              experiences with clean, semantic HTML5/CSS3, and style them
+              efficiently using Bootstrap and Tailwind CSS. For real-time
+              interactions and smooth data handling, I leverage AJAX and API
+              integrations. On the backend, I build robust server-side
+              applications using Node.js and Express.js, managing databases with
+              both MySQL and MongoDB depending on project needs. I also develop
+              cross-platform mobile apps using React Native, ensuring a seamless
+              experience across all devices. Whether you're looking for a
+              full-stack solution, a modern web interface, or mobile-first
+              development—I bring clean code, performance, and user-centric
+              design to every project.
             </p>
           </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div
-        ref={scrollRef}
-        className="absolute bottom-12 left-1/2 transform -translate-x-1/2 cursor-pointer z-20"
-        onClick={() => goToSection(1)}
-      >
-        <div className="flex flex-col items-center text-gray-500 hover:text-gray-700 transition-colors duration-300">
-          <span className="text-sm mb-3 font-light tracking-wide">
-            SCROLL TO EXPLORE
-          </span>
-          <div className="w-px h-12 bg-gray-400 mb-3"></div>
-          <ChevronDown size={20} />
+      <section className="relative h-screen">
+        <div
+          ref={scrollRef}
+          className="absolute bottom-12 left-1/2 transform -translate-x-1/2 cursor-pointer z-20"
+          onClick={() => goToSection(1)}
+        >
+          <div className="flex flex-col items-center text-gray-500 hover:text-gray-700 transition-colors duration-300">
+            <span className="text-sm mb-3 font-light tracking-wide">
+              SCROLL TO EXPLORE
+            </span>
+            <div className="w-px h-12 bg-gray-400 mb-3"></div>
+            <ChevronDown size={20} />
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* Progress Indicator */}
       <div className="absolute top-8 right-8 z-20">
