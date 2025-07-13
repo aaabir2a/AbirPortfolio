@@ -84,7 +84,7 @@ export default function Navigation({ currentSection }: NavigationProps) {
             className="text-2xl font-bold cursor-pointer"
             onClick={() => handleNavClick(0)}
           >
-            Portfolio
+            Abir Ahmed
           </div>
 
           {/* Desktop Menu */}

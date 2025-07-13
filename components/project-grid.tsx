@@ -7,21 +7,23 @@ import Image from "next/image";
 const projects = [
   {
     id: 1,
-    title: "SHINSEUNGBACK KIMYONGHUN",
-    category: "INTERACTIVE INSTALLATION",
-    image: "/project1.jpeg",
-    description: "Contemporary art installation exploring digital identity",
-    year: "2024",
-    client: "GALLERY MODERN",
+    title: "Dream Tourism IT",
+    category: "Tourism Platform",
+    image: "/project1.png",
+    description:
+      "Explore, Experience, Wander with Dream Tourism SRLS. Book your dream tours and activities worldwide with Dream Tourism SRLS. Your adventure awaits!",
+    year: "2025",
+    client: "Dream Tourism SRLS",
   },
   {
     id: 2,
-    title: "YANG ZZVOL ANABAILAT",
-    category: "DIGITAL BRANDING",
-    image: "/project2.jpeg",
-    description: "Brand identity for emerging fashion collective",
-    year: "2024",
-    client: "FASHION HOUSE",
+    title: "Dream Tourism UK",
+    category: "Tourism Platform",
+    image: "/project2.png",
+    description:
+      "Explore, Experience, Wander with Dream Tourism SRLS. Book your dream tours and activities worldwide with Dream Tourism SRLS. Your adventure awaits!",
+    year: "2025",
+    client: "Dream Tourism SRLS",
   },
   {
     id: 3,
@@ -49,15 +51,6 @@ const projects = [
     description: "Art book design for contemporary artists",
     year: "2024",
     client: "PUBLISHING",
-  },
-  {
-    id: 6,
-    title: "Abir Ahmed",
-    category: "INTERACTIVE INSTALLATION",
-    image: "/project6.jpeg",
-    description: "Contemporary art installation exploring digital identity",
-    year: "2024",
-    client: "GALLERY MODERN",
   },
 ];
 

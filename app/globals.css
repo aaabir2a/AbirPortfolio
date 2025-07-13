@@ -71,3 +71,25 @@
     scroll-behavior: smooth;
   }
 }
+/* Z-index layering system */
+.z-navbar {
+  z-index: 100;
+}
+.z-mobile-menu {
+  z-index: 90;
+}
+.z-popup {
+  z-index: 80;
+}
+.z-indicators {
+  z-index: 70;
+}
+.z-content {
+  z-index: 10;
+}
+
+/* Ensure sections don't overlap navbar */
+.fullpage-section {
+  position: relative;
+  z-index: 10;
+}
