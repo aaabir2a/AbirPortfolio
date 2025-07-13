@@ -57,7 +57,7 @@ export default function Contact({ isActive }: ContactProps) {
                 <Mail size={24} />
               </div>
               <h3 className="text-lg font-semibold">Email</h3>
-              <p className="text-gray-400">hello@portfolio.com</p>
+              <p className="text-gray-400">aaabir2a@gmail.com</p>
             </div>
 
             <div className="flex flex-col items-center space-y-3">
@@ -65,7 +65,7 @@ export default function Contact({ isActive }: ContactProps) {
                 <Phone size={24} />
               </div>
               <h3 className="text-lg font-semibold">Phone</h3>
-              <p className="text-gray-400">+1 (555) 123-4567</p>
+              <p className="text-gray-400">01326566733</p>
             </div>
 
             <div className="flex flex-col items-center space-y-3">
@@ -73,19 +73,19 @@ export default function Contact({ isActive }: ContactProps) {
                 <MapPin size={24} />
               </div>
               <h3 className="text-lg font-semibold">Location</h3>
-              <p className="text-gray-400">New York, NY</p>
+              <p className="text-gray-400">Dhaka, Bangladesh</p>
             </div>
           </div>
 
           <div className="flex justify-center space-x-6 mt-12">
             <a
-              href="#"
+              href="https://github.com/aaabir2a"
               className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors"
             >
               <Github size={20} />
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/aaabir2a/"
               className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors"
             >
               <Linkedin size={20} />

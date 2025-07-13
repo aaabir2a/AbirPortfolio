@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Download, Eye, FileText } from "lucide-react";
+import CVCarousel from "./CVCarousel";
 
 interface CVPreviewProps {
   isActive: boolean;
@@ -168,42 +169,9 @@ export default function CVPreview({ isActive }: CVPreviewProps) {
           {/* CV Preview Card */}
           <div ref={previewRef} className="flex-1 max-w-lg ml-8 md:ml-16">
             <div className="bg-gray-100 rounded-2xl p-8 shadow-2xl transform hover:scale-105 transition-transform duration-300">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center">
-                  <FileText size={24} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-black">John Doe</h3>
-                  <p className="text-gray-600">Creative Designer & Developer</p>
-                </div>
-              </div>
-
-              <div className="space-y-4 text-black">
-                <div>
-                  <h4 className="font-semibold mb-2">Experience</h4>
-                  <p className="text-sm text-gray-600">
-                    5+ years in digital design
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold mb-2">Skills</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {["UI/UX", "React", "GSAP", "Figma"].map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 bg-white rounded-full text-xs font-medium"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold mb-2">Education</h4>
-                  <p className="text-sm text-gray-600">Bachelor's in Design</p>
-                </div>
+              {/* Carousel Section */}
+              <div className="w-full mt-12">
+                <CVCarousel />
               </div>
             </div>
           </div>
@@ -257,42 +225,9 @@ export default function CVPreview({ isActive }: CVPreviewProps) {
           {/* CV Preview Card - Dark version */}
           <div className="flex-1 max-w-lg ml-8 md:ml-16">
             <div className="bg-gray-900 rounded-2xl p-8 shadow-2xl transform hover:scale-105 transition-transform duration-300 border border-gray-700">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                  <FileText size={24} className="text-black" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white">John Doe</h3>
-                  <p className="text-gray-300">Creative Designer & Developer</p>
-                </div>
-              </div>
-
-              <div className="space-y-4 text-white">
-                <div>
-                  <h4 className="font-semibold mb-2">Experience</h4>
-                  <p className="text-sm text-gray-300">
-                    5+ years in digital design
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold mb-2">Skills</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {["UI/UX", "React", "GSAP", "Figma"].map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 bg-gray-800 rounded-full text-xs font-medium text-gray-200"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold mb-2">Education</h4>
-                  <p className="text-sm text-gray-300">Bachelor's in Design</p>
-                </div>
+              {/* Carousel Section */}
+              <div className="w-full mt-12">
+                <CVCarousel />
               </div>
             </div>
           </div>
