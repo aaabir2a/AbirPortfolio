@@ -77,7 +77,7 @@ export default function Navigation({ currentSection }: NavigationProps) {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 p-6 bg-black/80 backdrop-blur-sm"
+        className="fixed top-0 left-0 right-0 z-[100] p-6 bg-black/90 backdrop-blur-md border-b border-white/10"
       >
         <div className="flex justify-between items-center max-w-7xl mx-auto">
           <div
@@ -127,7 +127,7 @@ export default function Navigation({ currentSection }: NavigationProps) {
       {/* Mobile Menu */}
       <div
         ref={menuRef}
-        className="fixed top-0 right-0 h-full w-64 bg-black/95 backdrop-blur-sm z-40 md:hidden transform translate-x-full"
+        className="fixed top-0 right-0 h-full w-64 bg-black/95 backdrop-blur-sm z-[90] md:hidden transform translate-x-full"
       >
         <div className="flex flex-col pt-20 px-6 space-y-6">
           {sections.map((section) => (

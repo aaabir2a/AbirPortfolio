@@ -14,6 +14,7 @@ const projects = [
       "Explore, Experience, Wander with Dream Tourism SRLS. Book your dream tours and activities worldwide with Dream Tourism SRLS. Your adventure awaits!",
     year: "2025",
     client: "Dream Tourism SRLS",
+    link: "https://dreamtourism.it",
   },
   {
     id: 2,
@@ -21,27 +22,30 @@ const projects = [
     category: "Tourism Platform",
     image: "/project2.png",
     description:
-      "Explore, Experience, Wander with Dream Tourism SRLS. Book your dream tours and activities worldwide with Dream Tourism SRLS. Your adventure awaits!",
-    year: "2025",
+      "Welcome to Dream Tourism Limited, registered in England & Wales (Company Number: 14801990).Registered office: 72 Linsdell Road, Barking, England, IG11 7LJ Trading address: Unit 7, 736–740 Romford Road, London, E12 6BT Explore our tours where European elegance meets British charm. Let’s turn your travel dreams into reality. ",
     client: "Dream Tourism SRLS",
+    link: "https://dreamtourism.co.uk",
   },
   {
     id: 3,
-    title: "INTERNOSCIA KOLGEN KUROKAWA",
+    title: "Dream Prospects",
     category: "WEB EXPERIENCE",
-    image: "/project3.jpeg?height=600&width=800",
-    description: "Immersive web experience for music collective",
-    year: "2023",
-    client: "MUSIC LABEL",
+    image: "/project3.png?height=600&width=800",
+    description:
+      "Dream Prospects is a leading educational consulting company based in the UK, dedicated to guiding students through their journey from admission to settlement in the world’s most popular study destinations, including the UK, USA, Canada, Australia, China, Malaysia, Denmark, and more.",
+    year: "2025",
+    client: "Dream Prospects",
+    link: "https://dreamprospects.co.uk",
   },
   {
     id: 4,
-    title: "PHILIPPE INTERNOS TESFALDET",
-    category: "MOTION GRAPHICS",
-    image: "/project4.jpeg?height=600&width=800",
+    title: "BLUEBAY IT",
+    category: "Software Firm",
+    image: "/project4.png?height=600&width=800",
     description: "Motion identity for documentary film",
-    year: "2023",
-    client: "FILM STUDIO",
+    year: "2025",
+    client: "BLUEBAYIT",
+    link: "https://bluebayit.com",
   },
   {
     id: 5,
@@ -51,6 +55,7 @@ const projects = [
     description: "Art book design for contemporary artists",
     year: "2024",
     client: "PUBLISHING",
+    link: "https://snelgrovelimbuyang.com",
   },
 ];
 
@@ -254,23 +259,27 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
 
         {projects.map((project, index) => {
           const position = getTextPositions(index);
-          const isActive = currentProject === index;
+          const isActiveProject = currentProject === index;
           const isHovered = hoveredProject === index;
 
           return (
-            <div
+            <a
               key={project.id}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
               className="project-text absolute cursor-pointer select-none"
               style={{
                 ...position,
-                // transform: `rotate(${(Math.random() - 0.5) * 15}deg)`,
+                zIndex: isHovered ? 20 : 10,
+                transition: "z-index 0.2s",
               }}
               onMouseEnter={() => handleProjectHover(index)}
               onMouseLeave={() => handleProjectHover(null)}
             >
               <div
                 className={`transition-all duration-500 ease-out ${
-                  isActive || isHovered
+                  isActiveProject || isHovered
                     ? "opacity-100 scale-110"
                     : "opacity-60 scale-100"
                 }`}
@@ -304,7 +313,7 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           );
         })}
       </div>
