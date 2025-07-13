@@ -49,13 +49,14 @@ const projects = [
   },
   {
     id: 5,
-    title: "SNELGROVE LIMBU YANG",
+    title: "Welcome Diagnostic & Medical Centre",
     category: "EDITORIAL DESIGN",
-    image: "/project2.jpeg?height=600&width=800",
-    description: "Art book design for contemporary artists",
+    image: "/project5.png?height=600&width=800",
+    description:
+      "Welcome Diagnostic & Medical Center Services with its facilities and services is capable of screening migrant/guest workers and other international travelers from infectious and ...",
     year: "2024",
     client: "PUBLISHING",
-    link: "https://snelgrovelimbuyang.com",
+    link: "https://welcome-dmc.com/",
   },
 ];
 
@@ -310,6 +311,7 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
                   <div className="flex gap-4 mt-2 text-xs text-gray-400">
                     <span>{project.year}</span>
                     <span>{project.client}</span>
+                    <span>{project.link}</span>
                   </div>
                 </div>
               </div>
@@ -354,7 +356,8 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
               </p>
               <div className="pt-2 text-xs text-gray-400 font-mono">
                 {projects[hoveredProject].year} &nbsp;·&nbsp;{" "}
-                {projects[hoveredProject].client}
+                {projects[hoveredProject].client} &nbsp;·&nbsp;{" "}
+                {projects[hoveredProject].link}
               </div>
             </div>
           </div>
