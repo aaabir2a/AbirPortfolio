@@ -203,14 +203,35 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
   const imagePreviewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+    const moveImage = (e: MouseEvent) => {
+      const el = imageRef.current;
+      if (!el) return;
+
+      const cardWidth = 600; // You use w-[600px] in the hover card
+      const cardHeight = 220; // Approximate height with padding
+
+      const padding = 20;
+      let x = e.clientX + padding;
+      let y = e.clientY + padding;
+
+      // Clamp to prevent overflow
+      if (x + cardWidth > window.innerWidth) {
+        x = window.innerWidth - cardWidth - padding;
+      }
+      if (y + cardHeight > window.innerHeight) {
+        y = window.innerHeight - cardHeight - padding;
+      }
+
+      gsap.to(el, {
+        x,
+        y,
+        duration: 0.3,
+        ease: "power3.out",
+      });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    window.addEventListener("mousemove", moveImage);
+    return () => window.removeEventListener("mousemove", moveImage);
   }, []);
 
   return (
@@ -326,7 +347,7 @@ export default function ProjectGrid({ isActive }: ProjectGridProps) {
         style={{
           top: 0,
           left: 0,
-          transform: "translate(-50%, -50%)",
+          transform: "translate(0, 0)",
           opacity: 0,
           scale: 0.95,
         }}
