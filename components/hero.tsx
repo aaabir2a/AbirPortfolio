@@ -164,7 +164,7 @@ export default function Hero({ goToSection }: HeroProps) {
         <div className="h-full flex items-center justify-between px-8 md:px-16 lg:px-24">
           {/* Main Title - White text on black background */}
           <div className="flex-1">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl xl:text-[12rem] font-bold leading-none tracking-tight text-white">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-[10rem] font-bold leading-none tracking-tight text-white">
               full stack software developer
             </h1>
           </div>

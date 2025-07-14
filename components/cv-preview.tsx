@@ -123,7 +123,7 @@ export default function CVPreview({ isActive }: CVPreviewProps) {
             <div className="overflow-hidden">
               <h1
                 ref={titleRef}
-                className="text-6xl md:text-8xl lg:text-9xl xl:text-[12rem] font-bold leading-none tracking-tight text-black"
+                className="text-4xl md:text-6xl lg:text-7xl xl:text-[8rem] font-bold leading-none tracking-tight text-black"
               >
                 My Resume
               </h1>
@@ -186,9 +186,9 @@ export default function CVPreview({ isActive }: CVPreviewProps) {
         <div className="h-full flex items-center justify-between px-8 md:px-16 lg:px-24">
           {/* Main Content - White text on black background */}
           <div className="flex-1">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl xl:text-[12rem] font-bold leading-none tracking-tight text-white">
+            <h3 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-none tracking-tight text-white">
               My Resume
-            </h1>
+            </h3>
 
             <p className="text-base md:text-lg leading-relaxed text-white font-light max-w-2xl mt-8">
               Explore my professional journey, skills, and achievements.
